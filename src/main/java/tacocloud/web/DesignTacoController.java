@@ -1,11 +1,14 @@
-package tacocloud;
+package tacocloud.web;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +18,6 @@ import tacocloud.Taco;
 
 @Slf4j
 @Controller
-
 public class DesignTacoController {
 	
 	@RequestMapping("/design")
@@ -46,5 +48,10 @@ public class DesignTacoController {
 		return ingredients.stream()
 							.filter(x -> x.getType().equals(type))
 							.collect(Collectors.toList());
+	}
+	
+	@PostMapping
+	public String processDesign(@Valid Taco design) {
+		return "redirect:/orders/current";
 	}
 }
